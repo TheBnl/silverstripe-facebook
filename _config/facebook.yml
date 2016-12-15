@@ -1,0 +1,21 @@
+---
+Name: facebook
+After:
+  - 'framework/*'
+  - 'cms/*'
+---
+Member:
+  extensions:
+    - FacebookMemberExtension
+Facebook:
+  app_id: ''
+  app_secret: ''
+  page_id: ''
+
+---
+Name: facebook_routes
+After: framework/routes#coreroutes
+---
+Director:
+  rules:
+    'facebook//$Action': 'FacebookCallbackController'
