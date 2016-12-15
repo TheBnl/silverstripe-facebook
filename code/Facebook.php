@@ -22,11 +22,16 @@ class Facebook extends Object {
      */
     public function __construct()
     {
-        $this->facebook = new Facebook\Facebook([
+        if (!isset($this->facebook)) $this->facebook = new Facebook\Facebook([
             'app_id' => self::config()->get('app_id'),
             'app_secret' => self::config()->get('app_secret'),
             'default_graph_version' => 'v2.5',
         ]);
+
+        // TODO check if token and if valid, else stop facebook operations and notify user silently
+        if ($token = Facebook::get_access_token()) {
+            $this->facebook->setDefaultAccessToken($token);
+        }
         
         parent::__construct();
     }
@@ -46,31 +51,24 @@ class Facebook extends Object {
      * Get a graph node
      *
      * @param $path
+     * @param array $params
      * @return \Facebook\FacebookResponse|null
      */
-    public function get($path, $fields = array()) {
-        if (!empty($fields)) {
-            $path .= '?fields=' . implode(',', $fields);
-        }
-
-        if ($token = Facebook::get_access_token()) {
-            $fb = $this->facebook;
-            $fb->setDefaultAccessToken($token);
-            return $fb->get($path);
-        } else {
-            return null;
-        }
+    public function get($path, array $params = []) {
+        return $this->facebook->sendRequest('GET', $path, $params);
     }
 
 
     /**
      * Get the page data
      *
+     * @param null $node
+     * @param array $params
      * @return \Facebook\FacebookResponse|null
      */
-    public function getPage() {
+    public function getPage($node = null, array $params = []) {
         $pageID = self::config()->get('page_id');
-        return $this->get("/$pageID");
+        return $this->get("/$pageID/$node", $params);
     }
 
 
@@ -80,8 +78,7 @@ class Facebook extends Object {
      * @return \Facebook\FacebookResponse|null
      */
     public function getPageEvents() {
-        $pageID = self::config()->get('page_id');
-        return $this->get("/$pageID/events");
+        return $this->getPage('events');
     }
 
 
