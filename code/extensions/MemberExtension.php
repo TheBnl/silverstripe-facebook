@@ -40,19 +40,16 @@ class MemberExtension extends DataExtension
 
     /**
      * Get a facebook access token
-     *
-     * @return null
+     * @return string|null
      */
     public function getFBAccessToken()
     {
         if ($accessToken = $this->owner->getField('FB_LongLivedAccessToken')) {
             return $accessToken;
+        } elseif ($accessToken = $this->owner->getField('FB_ShortLivedAccessToken')) {
+            return $accessToken;
         } else {
-            if ($accessToken = $this->owner->getField('FB_ShortLivedAccessToken')) {
-                return $accessToken;
-            } else {
-                return null;
-            }
+            return null;
         }
     }
 }

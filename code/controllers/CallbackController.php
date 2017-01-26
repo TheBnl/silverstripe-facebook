@@ -25,7 +25,7 @@ class CallbackController extends Controller
      */
     public function authenticate()
     {
-        $facebook = new FB();
+        $facebook = new SilverstripeFacebook();
         $helper = $facebook->instance()->getRedirectLoginHelper();
         $oAuthClient = $facebook->instance()->getOAuth2Client();
 
@@ -46,7 +46,7 @@ class CallbackController extends Controller
             $currentUser->setField('FB_LongLivedAccessToken', (string)$longLivedAccessToken->getValue());
             $currentUser->setField('FB_LongLivedAccessTokenValidUntil', $longLivedAccessToken->getExpiresAt()->getTimestamp());
             $currentUser->write();
-
+            
             $memberID = Member::currentUserID();
             $this->redirect("/admin/security/EditForm/field/Members/item/{$memberID}/edit");
         } else {

@@ -7,7 +7,7 @@ After:
 Member:
   extensions:
     - Broarm\Silverstripe\Facebook\MemberExtension
-Broarm\Silverstripe\Facebook\FB:
+Broarm\Silverstripe\Facebook\SilverstripeFacebook:
   app_id: ''
   app_secret: ''
   page_id: ''

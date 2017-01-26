@@ -7,12 +7,12 @@ use Member;
 use Object;
 
 /**
- * Facebook.php
+ * SilverstripeFacebook.php
  *
  * @author Bram de Leeuw
  * Date: 25/11/16
  */
-class FB extends Object
+class SilverstripeFacebook extends Object
 {
 
     private static $app_id = '';
@@ -40,7 +40,7 @@ class FB extends Object
         }
 
         // TODO check if token and if valid, else stop facebook operations and notify user silently
-        if ($token = FB::get_access_token()) {
+        if ($token = SilverstripeFacebook::get_access_token()) {
             $this->facebook->setDefaultAccessToken($token);
         }
 
@@ -110,7 +110,7 @@ class FB extends Object
             'FB_LongLivedAccessTokenValidUntil:GreaterThan' => date('Y-m-d')
         ));
 
-        /** @var $member Member|FacebookMemberExtension */
+        /** @var $member Member|MemberExtension */
         if ($member = Member::currentUser()) {
             return $member->getFBAccessToken();
         } else {

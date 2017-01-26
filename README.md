@@ -1,6 +1,6 @@
 # WIP Facebook graph api wrapper for silverstripe
 
-Still a work in progress, needs solid error caching etc.
+Still a work in progress, needs solid error catching etc.
 
 ## License
 

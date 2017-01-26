@@ -14,7 +14,7 @@ class AuthButton extends LiteralField
 
     public function __construct($name)
     {
-        $facebook = new FB();
+        $facebook = new SilverstripeFacebook();
         $helper = $facebook->instance()->getRedirectLoginHelper();
         $loginURL = $helper->getLoginUrl(Director::absoluteURL('facebook/authenticate'));
 
