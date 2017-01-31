@@ -4,6 +4,7 @@ namespace Broarm\Silverstripe\Facebook;
 
 use DataExtension;
 use FieldList;
+use LiteralField;
 
 /**
  * Class FacebookMemberExtension
@@ -12,7 +13,7 @@ use FieldList;
  * @property \Member|MemberExtension owner
  * @property string FB_ShortLivedAccessToken
  * @property string FB_LongLivedAccessToken
- * @property \SS_Datetime FB_LongLivedAccessTokenValidUntil
+ * @property string FB_LongLivedAccessTokenValidUntil
  */
 class MemberExtension extends DataExtension
 {
@@ -24,6 +25,17 @@ class MemberExtension extends DataExtension
 
     public function updateCMSFields(FieldList $fields)
     {
+        if ($this->isAuthenticatedWithFacebook()) {
+            $validUntil = $this->owner->dbObject('FB_LongLivedAccessTokenValidUntil');
+            $label = _t('Facebook.AUTHENTICATED', 'Has valid authentication until {date}', null, array(
+                'date' => $validUntil->Format('d-m-Y')
+            ));
+            $button = "<p class='message good'>$label</p>";
+            $fields->addFieldsToTab('Root.Facebook', array(
+                LiteralField::create('FBAuthenticated', $button),
+            ));
+        }
+
         $fields->addFieldsToTab('Root.Facebook', array(
             AuthButton::create('FBAuthButton')
         ));
@@ -35,6 +47,15 @@ class MemberExtension extends DataExtension
         ));
 
         return $fields;
+    }
+    
+    public function isAuthenticatedWithFacebook() {
+        /** @var \SS_Datetime $validUntil */
+        if ($validUntil = $this->owner->dbObject('FB_LongLivedAccessTokenValidUntil')) {
+            return $validUntil->InFuture();
+        }
+
+        return false;
     }
 
 

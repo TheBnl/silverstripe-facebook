@@ -7,10 +7,8 @@ use Member;
 use Object;
 
 /**
- * SilverstripeFacebook.php
- *
- * @author Bram de Leeuw
- * Date: 25/11/16
+ * Class SilverstripeFacebook
+ * @package Broarm\Silverstripe\Facebook
  */
 class SilverstripeFacebook extends Object
 {
