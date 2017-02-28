@@ -8,6 +8,7 @@ use Object;
 
 /**
  * Class SilverstripeFacebook
+ *
  * @package Broarm\Silverstripe\Facebook
  */
 class SilverstripeFacebook extends Object
@@ -60,8 +61,9 @@ class SilverstripeFacebook extends Object
     /**
      * Get a graph node
      *
-     * @param $path
+     * @param       $path
      * @param array $params
+     *
      * @return \Facebook\FacebookResponse|null
      */
     public function get($path, array $params = [])
@@ -73,8 +75,9 @@ class SilverstripeFacebook extends Object
     /**
      * Get the page data
      *
-     * @param null $node
+     * @param null  $node
      * @param array $params
+     *
      * @return \Facebook\FacebookResponse|null
      */
     public function getPage($node = null, array $params = [])
@@ -108,17 +111,32 @@ class SilverstripeFacebook extends Object
             'FB_LongLivedAccessTokenValidUntil:GreaterThan' => date('Y-m-d')
         ));
 
-        /** @var $member Member|MemberExtension */
-        if ($member = Member::currentUser()) {
+        if ($members->count() && $member = $members->first()) {
             return $member->getFBAccessToken();
         } else {
-            if ($members->count() && $member = $members->first()) {
-                return $member->getFBAccessToken();
-            } else {
-                // TODO Prompt the user to re-authenticate
-                user_error('No access token available');
-                return null;
-            }
+            // TODO Prompt the user to re-authenticate
+            user_error('No access token available');
+            return null;
+        }
+    }
+
+
+    /**
+     * Check the access tokens date
+     *
+     * @return \SS_Datetime|\DBField
+     */
+    public static function access_token_valid_until()
+    {
+        $members = Member::get()->filter(array(
+            'FB_LongLivedAccessToken:not' => '',
+            'FB_LongLivedAccessTokenValidUntil:GreaterThan' => date('Y-m-d')
+        ));
+
+        if ($members->count() && $member = $members->first()) {
+            return $member->dbObject('FB_LongLivedAccessTokenValidUntil');
+        } else {
+            return null;
         }
     }
 
@@ -127,10 +145,11 @@ class SilverstripeFacebook extends Object
      * Get a config var
      *
      * @param $var
+     *
      * @return array|scalar
      * /
-    private static function get_config($var)
-    {
-        return Config::inst()->get('Facebook', $var);
-    } //*/
+     * private static function get_config($var)
+     * {
+     * return Config::inst()->get('Facebook', $var);
+     * } //*/
 }
