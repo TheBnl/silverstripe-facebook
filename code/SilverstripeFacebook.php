@@ -115,7 +115,6 @@ class SilverstripeFacebook extends Object
             return $member->getFBAccessToken();
         } else {
             // TODO Prompt the user to re-authenticate
-            user_error('No access token available');
             return null;
         }
     }
