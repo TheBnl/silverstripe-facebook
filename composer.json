@@ -1,7 +1,7 @@
 {
   "name": "bramdeleeuw/facebook",
   "description": "WORK IN PROGRESS Facebook graph api wrapper for silverstripe",
-  "type": "silverstripe-module",
+  "type": "silverstripe-vendormodule",
   "keywords": ["silverstripe", "facebook", "graph"],
   "license": "BSD-3-Clause",
   "authors": [
@@ -11,11 +11,12 @@
     }
   ],
   "require": {
-    "silverstripe/framework": ">=3.1",
-    "facebook/graph-sdk": "^5.4",
-    "composer/installers": "*"
+    "silverstripe/framework": "~4.0",
+    "facebook/graph-sdk": "^5.6"
   },
-  "extra": {
-    "installer-name": "facebook"
+  "autoload": {
+    "psr-4": {
+      "Broarm\\Facebook\\": "src"
+    }
   }
 }

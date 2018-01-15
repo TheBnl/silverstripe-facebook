@@ -1,19 +1,18 @@
 <?php
 
-namespace Broarm\Silverstripe\Facebook;
+namespace Broarm\Facebook;
 
 use Facebook\Facebook;
-use Member;
-use Object;
+use SilverStripe\Security\Member;
+use SilverStripe\View\ViewableData;
 
 /**
  * Class SilverstripeFacebook
  *
  * @package Broarm\Silverstripe\Facebook
  */
-class SilverstripeFacebook extends Object
+class SilverstripeFacebook extends ViewableData
 {
-
     private static $app_id = '';
 
     private static $app_secret = '';
@@ -64,7 +63,8 @@ class SilverstripeFacebook extends Object
      * @param       $path
      * @param array $params
      *
-     * @return \Facebook\FacebookResponse|null
+     * @return \Facebook\FacebookResponse
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function get($path, array $params = [])
     {
@@ -78,7 +78,8 @@ class SilverstripeFacebook extends Object
      * @param null  $node
      * @param array $params
      *
-     * @return \Facebook\FacebookResponse|null
+     * @return \Facebook\FacebookResponse
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function getPage($node = null, array $params = [])
     {
@@ -90,7 +91,8 @@ class SilverstripeFacebook extends Object
     /**
      * Get a event list
      *
-     * @return \Facebook\FacebookResponse|null
+     * @return \Facebook\FacebookResponse
+     * @throws \Facebook\Exceptions\FacebookSDKException
      */
     public function getPageEvents()
     {
@@ -123,7 +125,7 @@ class SilverstripeFacebook extends Object
     /**
      * Check the access tokens date
      *
-     * @return \SS_Datetime|\DBField
+     * @return null|\SilverStripe\ORM\FieldType\DBDatetime|\SilverStripe\ORM\FieldType\DBField
      */
     public static function access_token_valid_until()
     {
@@ -138,17 +140,4 @@ class SilverstripeFacebook extends Object
             return null;
         }
     }
-
-
-    /**
-     * Get a config var
-     *
-     * @param $var
-     *
-     * @return array|scalar
-     * /
-     * private static function get_config($var)
-     * {
-     * return Config::inst()->get('Facebook', $var);
-     * } //*/
 }

@@ -1,26 +1,29 @@
 <?php
 
-namespace Broarm\Silverstripe\Facebook;
+namespace Broarm\Facebook;
 
-use DataExtension;
-use FieldList;
-use LiteralField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\LiteralField;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\Security\Member;
 
 /**
  * Class FacebookMemberExtension
+ *
  * @package Broarm\Silverstripe\Facebook
  *
- * @property \Member|MemberExtension owner
- * @property string FB_ShortLivedAccessToken
- * @property string FB_LongLivedAccessToken
- * @property string FB_LongLivedAccessTokenValidUntil
+ * @property Member|MemberExtension owner
+ * @property string                 FB_ShortLivedAccessToken
+ * @property string                 FB_LongLivedAccessToken
+ * @property string                 FB_LongLivedAccessTokenValidUntil
  */
 class MemberExtension extends DataExtension
 {
     private static $db = array(
         'FB_ShortLivedAccessToken' => 'Varchar(255)',
         'FB_LongLivedAccessToken' => 'Varchar(255)',
-        'FB_LongLivedAccessTokenValidUntil' => 'SS_Datetime'
+        'FB_LongLivedAccessTokenValidUntil' => 'Datetime'
     );
 
     public function updateCMSFields(FieldList $fields)
@@ -48,9 +51,10 @@ class MemberExtension extends DataExtension
 
         return $fields;
     }
-    
-    public function isAuthenticatedWithFacebook() {
-        /** @var \SS_Datetime $validUntil */
+
+    public function isAuthenticatedWithFacebook()
+    {
+        /** @var DBDatetime $validUntil */
         if ($validUntil = $this->owner->dbObject('FB_LongLivedAccessTokenValidUntil')) {
             return $validUntil->InFuture();
         }
@@ -61,6 +65,7 @@ class MemberExtension extends DataExtension
 
     /**
      * Get a facebook access token
+     *
      * @return string|null
      */
     public function getFBAccessToken()

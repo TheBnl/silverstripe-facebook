@@ -1,12 +1,13 @@
 <?php
 
-namespace Broarm\Silverstripe\Facebook;
+namespace Broarm\Facebook;
 
-use Director;
-use LiteralField;
+use SilverStripe\Control\Director;
+use SilverStripe\Forms\LiteralField;
 
 /**
  * Class AuthButton
+ *
  * @package Broarm\Silverstripe\Facebook
  */
 class AuthButton extends LiteralField
@@ -20,7 +21,7 @@ class AuthButton extends LiteralField
 
         // TODO: make more button like and translate the label
         $label = _t('Facebook.AUTHENTICATE_LABEL', 'Authenticate with Facebook');
-        $button = "<a href='{$loginURL}' class='ss-ui-button ui-button'>$label</a>";
+        $button = "<a href='{$loginURL}' class='btn action btn-primary'>$label</a>";
 
         parent::__construct($name, $button);
     }

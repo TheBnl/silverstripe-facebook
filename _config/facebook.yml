@@ -1,21 +1,17 @@
 ---
 Name: facebook
-After:
-  - 'framework/*'
-  - 'cms/*'
 ---
-Member:
+SilverStripe\Security\Member:
   extensions:
-    - Broarm\Silverstripe\Facebook\MemberExtension
-Broarm\Silverstripe\Facebook\SilverstripeFacebook:
+    - Broarm\Facebook\MemberExtension
+Broarm\Facebook\SilverstripeFacebook:
   app_id: ''
   app_secret: ''
   page_id: ''
 
 ---
 Name: facebook_routes
-After: framework/routes#coreroutes
 ---
-Director:
+SilverStripe\Control\Director:
   rules:
-    'facebook//$Action': Broarm\Silverstripe\Facebook\CallbackController
+    'facebook//$Action': Broarm\Facebook\CallbackController
