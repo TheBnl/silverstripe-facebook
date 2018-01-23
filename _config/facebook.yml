@@ -4,10 +4,6 @@ Name: facebook
 SilverStripe\Security\Member:
   extensions:
     - Broarm\Facebook\MemberExtension
-Broarm\Facebook\SilverstripeFacebook:
-  app_id: ''
-  app_secret: ''
-  page_id: ''
 
 ---
 Name: facebook_routes
