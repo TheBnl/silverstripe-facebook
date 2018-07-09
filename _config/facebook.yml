@@ -1,8 +1,5 @@
 ---
 Name: facebook
-After:
-  - 'framework/*'
-  - 'cms/*'
 ---
 Member:
   extensions:
