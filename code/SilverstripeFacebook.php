@@ -4,14 +4,14 @@ namespace Broarm\Silverstripe\Facebook;
 
 use Facebook\Facebook;
 use Member;
-use Object;
+use SS_Object;
 
 /**
  * Class SilverstripeFacebook
  *
  * @package Broarm\Silverstripe\Facebook
  */
-class SilverstripeFacebook extends Object
+class SilverstripeFacebook extends SS_Object
 {
 
     private static $app_id = '';
